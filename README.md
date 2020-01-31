@@ -64,8 +64,27 @@ The MVP of this project will be broken up between 2 stages. Follow each step.
 Build a login form to authenticate your users.
 
 - [ ] Construct an AXIOS request to retrieve a token from the server. You'll use this token to interact with the API
+
 - [ ] Save the token to localStorage
+                        type, payload
+  axios.post('/api/endpoint', userCredentials)
+        .then(res => {
+          localStorage.setItem('token', res.data.token)
+          props.history.push('/dashboard')
+        })
+
 - [ ] Build a `axiosWithAuth` module to create an instance of axios with the authentication header
+  export const axiosWithAuth = () => {
+    const token = localStorage.getItem('token');     <-- string from localStorage
+
+    return axios.create({
+      headers: {
+        'content-type': 'application/json',
+        authorization: `${token}`,
+      }
+    })
+  }
+
 - [ ] Build a `PrivateRoute` component and use it to protect a route that renders the `BubblesPage` component
 
 ### Stage 2 - Consuming the API
