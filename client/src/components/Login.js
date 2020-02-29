@@ -13,7 +13,8 @@ const Login = (props) => {
     axiosWithAuth()
     .post('http://localhost:5000/api/login', credentials)
     .then(res => {
-      window.localStorage.setItem('token', res.data)
+      window.localStorage.setItem('token', res.data.payload)
+      console.log(res)
       history.push('/bubble-page')
     })
     .catch(err => console.log(err))

@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
-import Bubbles from "./Bubbles";
+import { axiosWithAuth } from "../utils/axiosWithAuth";import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
   // fetch your colors data from the server when the component mounts
   // set that data to the colorList state property
-
-  useEffect(() => {
-    getData();
-    console.log(colorList)
-  }, [colorList])
   
-  const getData = () => {
-    const token = window.localStorage.getItem('token');
-    axiosWithAuth()
-      .get('http://localhost:5000/api/colors')
-      .then(res => {setColorList(res.data)})
-  }
+  useEffect(() => {
+      axiosWithAuth()
+        .get('/api/colors')
+        .then(res => setColorList(res.data))
+        .catch( err => console.log('we couldnt get any colors', err))
+  }, [])
 
   return (
     <>
